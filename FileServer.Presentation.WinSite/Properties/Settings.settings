@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="FileServer.Presentation.WinSite.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="PathFitxer" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\Projectes\FileServer\DB</Value>
+    </Setting>
+    <Setting Name="NomFitxer" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Alumnes.Json</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
