@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,7 +16,20 @@ namespace FileServer.Insfrastructure.Repository.Repositories
 		//
 		public static bool CreateFile(string Path)
 		{
-			throw new NotImplementedException("The method is not implemented yet");
+			bool fitxerCreat = false;
+
+			try {
+				if (!File.Exists(Path)) {
+					fitxerCreat = (File.Create(Path) != null);
+				}
+				else {
+					fitxerCreat = true;
+				}
+			}
+			catch (Exception ex) {
+				Console.WriteLine(ex.Message);
+			}
+			return(fitxerCreat);
 		}
 	}
 }

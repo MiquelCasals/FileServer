@@ -16,14 +16,14 @@ namespace FileServer.Insfrastructure.Repository.Repositories.Tests
     private IAlumnoRepository mockObject;
 
 		Alumno alumne = new Alumno { ID = 1, Nombre = "Miquel", Apellidos = "Casals Barbany", DNI = "00000000T" };
-		string dbFile = @"C:\Projectes\NET\FileServer\DB\Alumnes.Json";
+		//string dbFile = @"C:\Projectes\NET\FileServer\DB\Alumnes.Json";
 
     [TestInitialize]
     public void Setup()
     {
       var mock = new Mock<IAlumnoRepository>();      
 
-      mock.Setup(x => x.Add(alumne,dbFile)).Returns(alumne);
+      mock.Setup(x => x.Add(alumne)).Returns(alumne);
       
       mockObject = mock.Object;
     }
@@ -31,7 +31,7 @@ namespace FileServer.Insfrastructure.Repository.Repositories.Tests
 		[TestMethod()]
 		public void AddTest()
 		{
-      var result = mockObject.Add(alumne,dbFile);
+      var result = mockObject.Add(alumne);
       Assert.AreEqual(alumne,result);
 		}
 	}

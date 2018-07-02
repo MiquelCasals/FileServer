@@ -15,12 +15,12 @@ namespace FileServer.Insfrastructure.Repository.Repositories.Tests
 		readonly IAlumnoRepository iAlumnoRepository = new AlumnoRepository();
 
     Alumno alumne = new Alumno { ID = 1, Nombre = "Miquel", Apellidos = "Casals Barbany", DNI = "00000000T" };
-		string dbFile = @"C:\Projectes\NET\FileServer\DB\Alumnes.Json";
+		//string dbFile = @"C:\Projectes\NET\FileServer\DB\Alumnes.Json";
 
 		[TestMethod]
 		public void AddTest()
 		{
-			Assert.IsTrue(iAlumnoRepository.Add(alumne, dbFile).Equals(alumne));
+			Assert.IsTrue(iAlumnoRepository.Add(alumne).Equals(alumne));
 		}
 	}
 }

@@ -25,15 +25,15 @@ namespace FileServer.Presentation.WinSite
 
     private void btn_Afegir_Click(object sender, EventArgs e)
     {
-			string dbFile = Properties.Settings.Default.PathFitxer + "\\" +
-				              Properties.Settings.Default.NomFitxer;
+			//string dbFile = Properties.Settings.Default.PathFitxer + "\\" +
+			//	              Properties.Settings.Default.NomFitxer;
       try { 
 				Alumno alumne = new Alumno(IdAlumno	 :	Convert.ToInt32(txtBox_CodiClient.Text),
 					                         Nombre		 : txtBox_Nom.Text,
 					                         Apellidos : txtBox_Cognoms.Text,
 					                         Dni			 : txtBox_Dni.Text);
 
-				iAlumnoRepository.Add(alumne, dbFile);
+				iAlumnoRepository.Add(alumne);
 
         MessageBox.Show ("Registre afegit a la DB!");
       }

@@ -17,6 +17,6 @@ namespace FileServer.Insfrastructure.Repository
 		/// </summary>
 		/// <param name="alumno">Alumne a inserir</param>
 		/// <returns>El Alumne inserit</returns>
-		Alumno Add(Alumno alumno, string dbFile);
+		Alumno Add(Alumno alumno);
 	}
 }
