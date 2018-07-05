@@ -18,5 +18,11 @@ namespace FileServer.Insfrastructure.Repository
 		/// <param name="alumno">Alumne a inserir</param>
 		/// <returns>El Alumne inserit</returns>
 		Alumno Add(Alumno alumno);
+
+		/// <summary>
+		/// Gets the last alumno.
+		/// </summary>
+		/// <returns></returns>
+		Alumno GetLastAlumno();
 	}
 }

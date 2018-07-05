@@ -39,32 +39,34 @@ namespace FileServer.Common.Model
 			this.Apellidos	= Apellidos;
 			this.DNI				= Dni;
 		}
+
 		/// <summary>
 		/// Equals: ens permet comparar classes Alumno
 		/// </summary>
 		/// <param name="obj">Objecte amb el que comparar</param>
 		/// <returns>Si compleixen el patró de igualtat. En el nostre cas, si tenen el mateix ID</returns>
-		public override bool Equals(object obj)
+		public override bool Equals( object obj )
 		{
-			var alumne = obj as Alumno;
-			var sonIguals = false;
-
-			if (alumne != null) {
-				sonIguals = (this.ID.Equals(alumne.ID));
-			}
-			return(sonIguals);
+			var alumno = obj as Alumno;
+			return (alumno    != null &&
+						  ID        == alumno.ID &&
+						  Nombre    == alumno.Nombre &&
+						  Apellidos == alumno.Apellidos &&
+						  DNI       == alumno.DNI);
 		}
 
 		/// <summary>
-		/// Returns a hash code for this instance.
+		/// GetHashCode
 		/// </summary>
-		/// <returns>
-		/// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table. 
-		/// </returns>
+		/// <returns></returns>
 		public override int GetHashCode()
 		{
-			// Buscar a Google com implementar-ho.
-			return(this.ID.GetHashCode());
+			var hashCode = 287315274;
+			hashCode = hashCode * -1521134295 + ID.GetHashCode();
+			hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Nombre);
+			hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Apellidos);
+			hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(DNI);
+			return hashCode;
 		}
 
 	}

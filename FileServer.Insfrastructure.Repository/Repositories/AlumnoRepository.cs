@@ -6,43 +6,65 @@ using System.Threading.Tasks;
 using FileServer.Common.Model;
 using Newtonsoft.Json;
 using System.IO;
-using System.Configuration;
 
 namespace FileServer.Insfrastructure.Repository.Repositories
 {
 	public class AlumnoRepository : IAlumnoRepository
 	{
+		private Object lockObject = new Object();
 		/// <summary>
-		/// Afegeix un alumne al srxiu JSON
+		/// Constructor.
+		/// Comprovem si el fitxer de DB existeix i sino el crea.
+		/// </summary>
+		public AlumnoRepository()
+		{
+			// Si el fitxer de la DB no existeix el creem
+			if (!FileManager.Exist()) {
+				FileManager.Create();
+			}
+		}
+		/// <summary>
+		/// Afegeix un alumne al arxiu JSON
 		/// </summary>
 		/// <param name="alumno"></param>
 		/// <returns>El Alumne inserit o null si no coincideix</returns>
 		public Alumno Add(Alumno alumno)
 		{
 			Alumno alumneAdded = null;
-      StreamWriter sw = null;
-			// Llegim la variable del App.Config que ens indica el nom del arxiu on gravarem el alumne
-			string dbFile = ConfigurationManager.AppSettings.Get("Path");
 
 			try {
 				// Serialitzem el alumne en format json
 				string json = JsonConvert.SerializeObject(alumno);
-				// Si no existeix el arxiu de DB el creem
-				if (FileManager.CreateFile(dbFile)) {
-					// Gravem el alumne a la DB
-					sw = new StreamWriter(dbFile, true);
-					sw.WriteLine(json);
-					// A partir del string del json composo una nova instància alumne
-					alumneAdded = JsonConvert.DeserializeObject<Alumno>(json);
+				// Gravem el alumne a la DB. 
+				// Utilitzem el Lock per a fer-lo thread save
+				lock (lockObject)
+				{
+					FileManager.Write(json);
+					// Cal llegir el alumne insertat en el arxiu
+					alumneAdded = GetLastAlumno();
 				}
       }
       catch (Exception ex) {
         Console.WriteLine(ex.Message);
       }
-      finally {
-        if (sw != null) sw.Close();
-      }
 			return(alumneAdded);
+		}
+
+		/// <summary>
+		/// Obtenim el últim alumne afegit al fitxer DB
+		/// </summary>
+		/// <returns></returns>
+		public Alumno GetLastAlumno()
+		{
+			Alumno lastAlumne = null;
+			string json = String.Empty;
+
+			// Llegeixo el últim registre i el serialitzo 
+			json = FileManager.ReadLast();
+			// A partir del string del json composo una nova instància alumne
+			lastAlumne = JsonConvert.DeserializeObject<Alumno>(json);
+
+			return (lastAlumne);
 		}
 	}
 }

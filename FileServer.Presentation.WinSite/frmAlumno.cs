@@ -10,21 +10,26 @@ using System.Windows.Forms;
 using FileServer.Common.Model;
 using FileServer.Insfrastructure.Repository;
 using FileServer.Insfrastructure.Repository.Repositories;
+using log4net;
 
 namespace FileServer.Presentation.WinSite
 {
   public partial class frmAlumno : Form
   {
+		private static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 		IAlumnoRepository iAlumnoRepository;
 
     public frmAlumno()
     {
-      InitializeComponent();
+			log.Info("Inici constructor");
+			InitializeComponent();
       iAlumnoRepository = new AlumnoRepository();
+			log.Info("Final constructor");
     }
 
     private void btn_Afegir_Click(object sender, EventArgs e)
     {
+			log.Info("Inici btn_Afegir_Click");
 			//string dbFile = Properties.Settings.Default.PathFitxer + "\\" +
 			//	              Properties.Settings.Default.NomFitxer;
       try { 
@@ -36,10 +41,12 @@ namespace FileServer.Presentation.WinSite
 				iAlumnoRepository.Add(alumne);
 
         MessageBox.Show ("Registre afegit a la DB!");
+				log.Info("Alumne: " + alumne.ID.ToString() + alumne.Nombre + " afegit.");
       }
       catch (Exception ex) {
-        Console.WriteLine(ex.Message);
+				log.Error("Error al fer el Add del alumne: ", ex);
       }
+			log.Info("Final btn_Afegir_Click");
     }
   }
 }
